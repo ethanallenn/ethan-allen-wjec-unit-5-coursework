@@ -34,8 +34,9 @@ def check_credentials():
 root = tk.Tk()
 root.title("Calle Pharmacy Login")
 root.geometry("1280x720")
-root.config(bg="white")
-logo = PhotoImage(file='Logo.png')
+root.config(bg="light blue")
+root.resizable(False, False)
+
 
 # Configure grid to center widgets
 for i in range(7):
@@ -43,14 +44,19 @@ for i in range(7):
     root.columnconfigure(0, weight=1)
     root.columnconfigure(1, weight=1)
 
+    # Load and display the logo image
+    logo_image = tk.PhotoImage(file="c:/Users/ethan/OneDrive - C2k/Year 14_24_25/Computer Science/A2 - Coursework/SoftwareDevelopment/ethan-allen-wjec-unit-5-coursework/VIEWS + DATABASES/Logo_new.png")
+    logo_label = tk.Label(root, image=logo_image, bg="light blue")
+    logo_label.grid(row=0, column=0, columnspan=2, pady=20)
+
 # Create and place the username label and entry
-username_label = tk.Label(root, text="Username:", bg="white", fg="black")
-username_label.grid(row=2, column=0, padx=10, pady=10, sticky=tk.E)
+username_label = tk.Label(root, text="Username:", bg="light blue", fg="black")
+username_label.grid(row=2, column=0, padx=10, pady=5, sticky=tk.E)
 username_entry = tk.Entry(root)
 username_entry.grid(row=2, column=1, padx=10, pady=10, sticky=tk.W)
 
 # Create and place the password label and entry
-password_label = tk.Label(root, text="Password:", bg="white", fg="black")
+password_label = tk.Label(root, text="Password:", bg="light blue", fg="black")
 password_label.grid(row=3, column=0, padx=10, pady=10, sticky=tk.E)
 password_entry = tk.Entry(root, show="*")
 password_entry.grid(row=3, column=1, padx=10, pady=10, sticky=tk.W)
