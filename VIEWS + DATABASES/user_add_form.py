@@ -31,27 +31,11 @@ def add_user():
         conn.commit()
         messagebox.showinfo("Success", "User added successfully")
         root.destroy()  # Close the current window
-        import login_view  # Open the login_view.py window
+        os.system('python login_view.py')  # Open the login_view.py window
     except sqlite3.IntegrityError:
         messagebox.showerror("Error", "Username already exists")
     finally:
         conn.close()
-
-# Function to add placeholder text
-def add_placeholder(entry, placeholder):
-    entry.insert(0, placeholder)
-    entry.bind("<FocusIn>", lambda event: clear_placeholder(event, placeholder))
-    entry.bind("<FocusOut>", lambda event: restore_placeholder(event, placeholder))
-
-def clear_placeholder(event, placeholder):
-    if event.widget.get() == placeholder:
-        event.widget.delete(0, tk.END)
-        event.widget.config(fg='black')
-
-def restore_placeholder(event, placeholder):
-    if not event.widget.get():
-        event.widget.insert(0, placeholder)
-        event.widget.config(fg='grey')
 
 # Tkinter setup
 root = tk.Tk()
@@ -65,40 +49,27 @@ font_style = ("Helvetica", 16)
 tk.Label(root, text="Add New User:", font=("Helvetica", 20, "bold"), bg="light blue").grid(row=0, column=0, columnspan=2, pady=10)
 
 tk.Label(root, text="Username:", font=font_style, bg="light blue").grid(row=1, column=0, padx=10, pady=5, sticky="e")
-entry_username = tk.Entry(root, font=font_style, fg='grey')
+entry_username = tk.Entry(root, font=font_style)
 entry_username.grid(row=1, column=1, padx=10, pady=5, sticky="w")
-add_placeholder(entry_username, "Enter username")
 
 tk.Label(root, text="Password:", font=font_style, bg="light blue").grid(row=2, column=0, padx=10, pady=5, sticky="e")
-entry_password = tk.Entry(root, show="*", font=font_style, fg='grey')
+entry_password = tk.Entry(root, show="*", font=font_style)
 entry_password.grid(row=2, column=1, padx=10, pady=5, sticky="w")
-add_placeholder(entry_password, "Enter password")
 
-tk.Label(root, text="First Name:", font=font_style, bg="light blue").grid(row=3, column=0, padx=10, pady=5, sticky="e")
-entry_first_name = tk.Entry(root, font=font_style, fg='grey')
+tk.Label(root, text="First Name", font=font_style, bg="light blue").grid(row=3, column=0, padx=10, pady=5, sticky="e")
+entry_first_name = tk.Entry(root, font=font_style)
 entry_first_name.grid(row=3, column=1, padx=10, pady=5, sticky="w")
-add_placeholder(entry_first_name, "Enter first name")
 
-tk.Label(root, text="Last Name:", font=font_style, bg="light blue").grid(row=4, column=0, padx=10, pady=5, sticky="e")
-entry_last_name = tk.Entry(root, font=font_style, fg='grey')
+tk.Label(root, text="Last Name", font=font_style, bg="light blue").grid(row=4, column=0, padx=10, pady=5, sticky="e")
+entry_last_name = tk.Entry(root, font=font_style)
 entry_last_name.grid(row=4, column=1, padx=10, pady=5, sticky="w")
-add_placeholder(entry_last_name, "Enter last name")
 
-tk.Label(root, text="Access Level:", font=font_style, bg="light blue").grid(row=5, column=0, padx=10, pady=5, sticky="e")
+tk.Label(root, text="Access Level", font=font_style, bg="light blue").grid(row=5, column=0, padx=10, pady=5, sticky="e")
 combo_access_level = ttk.Combobox(root, values=["Administrator", "Manager", "Pharmacist", "Team Member"], font=font_style)
 combo_access_level.grid(row=5, column=1, padx=10, pady=5, sticky="w")
 
 submit_button = tk.Button(root, text="Submit", command=add_user, font=font_style)
-submit_button.grid(row=6, column=0, padx=10, pady=20, sticky="e")
-
-# Function to open main_view
-def open_main_view():
-    root.destroy()
-    import main_view  # Open the main_view.py window
-
-# Adding a menu button
-menu_button = tk.Button(root, text="Menu", command=open_main_view, font=font_style)
-menu_button.grid(row=6, column=1, padx=10, pady=20, sticky="w")
+submit_button.grid(row=6, column=0, columnspan=2, pady=20)
 
 root.grid_columnconfigure(0, weight=1)
 root.grid_columnconfigure(1, weight=1)

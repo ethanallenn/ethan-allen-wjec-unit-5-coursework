@@ -20,7 +20,7 @@ def edit_system_user():
 
 root = tk.Tk()
 root.title("Main Menu")
-root.geometry("1280x720")
+root.geometry("1400x720")
 root.config(bg="light blue")
 root.resizable(False, False)  # Set the width and height of the window
 
@@ -36,24 +36,26 @@ button_height = 7
 frame = tk.Frame(root, bg="light blue")
 frame.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
+font_style = ("Helvetica", 16)
+
 # Add User Button
-add_user_button = tk.Button(frame, text="Add User", command=open_user_add_form, width=button_width, height=button_height)
-add_user_button.grid(row=0, column=0, pady=10)
+add_user_button = tk.Button(frame, text="Add User", font=font_style, command=open_user_add_form, width=button_width, height=button_height)
+add_user_button.pack(side=tk.LEFT, padx=10)
 
 # Edit User Button
-edit_user_button = tk.Button(frame, text="Edit User", command=edit_system_user, width=button_width, height=button_height)
-edit_user_button.grid(row=1, column=0, pady=10)
+edit_user_button = tk.Button(frame, text="Edit User", font=font_style, command=edit_system_user, width=button_width, height=button_height)
+edit_user_button.pack(side=tk.LEFT, padx=10)
 
 # Delete User Button
-delete_user_button = tk.Button(frame, text="Delete User", command=delete_system_user, width=button_width, height=button_height)
-delete_user_button.grid(row=2, column=0, pady=10)
+delete_user_button = tk.Button(frame, text="Delete User", font=font_style, command=delete_system_user, width=button_width, height=button_height)
+delete_user_button.pack(side=tk.LEFT, padx=10)
 
 # Add Stock Button
-add_stock_button = tk.Button(frame, text="Add Stock", command=add_system_stock, width=button_width, height=button_height)
-add_stock_button.grid(row=3, column=0, pady=10)
+add_stock_button = tk.Button(frame, text="Add Stock", font=font_style, command=add_system_stock, width=button_width, height=button_height)
+add_stock_button.pack(side=tk.LEFT, padx=10)
 
 # Logout Button
-logout_button = tk.Button(frame, text="Logout", command=logout, width=button_width, height=button_height)
-logout_button.grid(row=4, column=0, pady=10)
+logout_button = tk.Button(frame, text="Logout", font=font_style, command=logout, width=button_width, height=button_height)
+logout_button.pack(side=tk.LEFT, padx=10)
 
 root.mainloop()

@@ -37,34 +37,38 @@ root.geometry("1280x720")
 root.config(bg="light blue")
 root.resizable(False, False)
 
-
 # Configure grid to center widgets
 for i in range(7):
     root.rowconfigure(i, weight=1)
-    root.columnconfigure(0, weight=1)
-    root.columnconfigure(1, weight=1)
+root.columnconfigure(0, weight=1)
+root.columnconfigure(1, weight=1)
+root.columnconfigure(2, weight=1)
 
-    # Load and display the logo image
-    logo_image = tk.PhotoImage(file="c:/Users/ethan/OneDrive - C2k/Year 14_24_25/Computer Science/A2 - Coursework/SoftwareDevelopment/ethan-allen-wjec-unit-5-coursework/VIEWS + DATABASES/Logo_new.png")
-    logo_label = tk.Label(root, image=logo_image, bg="light blue")
-    logo_label.grid(row=0, column=0, columnspan=2, pady=20)
+# Load and display the logo image
+logo_image = tk.PhotoImage(file="c:/Users/ethan/OneDrive - C2k/Year 14_24_25/Computer Science/A2 - Coursework/SoftwareDevelopment/ethan-allen-wjec-unit-5-coursework/VIEWS + DATABASES/Logo_new.png")
+logo_label = tk.Label(root, image=logo_image, bg="light blue")
+logo_label.grid(row=0, column=0, rowspan=7, pady=20, padx=20, sticky=tk.NS)
+
+font_style = ("Helvetica", 16)
+
+text_label = tk.Label(root, text="Login", bg="light blue", fg="black", font=("Helvetica", 16, "bold"))
+text_label.grid(row=1, column=1, columnspan=2, pady=10, sticky=tk.EW)
 
 # Create and place the username label and entry
-username_label = tk.Label(root, text="Username:", bg="light blue", fg="black")
-username_label.grid(row=2, column=0, padx=10, pady=5, sticky=tk.E)
-username_entry = tk.Entry(root)
-username_entry.grid(row=2, column=1, padx=10, pady=10, sticky=tk.W)
+username_label = tk.Label(root, text="Username:", font=font_style, bg="light blue", fg="black")
+username_label.grid(row=2, column=1, padx=10, pady=2, sticky=tk.E)
+username_entry = tk.Entry(root, font=font_style)
+username_entry.grid(row=2, column=2, padx=10, pady=2, sticky=tk.W)
 
 # Create and place the password label and entry
-password_label = tk.Label(root, text="Password:", bg="light blue", fg="black")
-password_label.grid(row=3, column=0, padx=10, pady=10, sticky=tk.E)
-password_entry = tk.Entry(root, show="*")
-password_entry.grid(row=3, column=1, padx=10, pady=10, sticky=tk.W)
+password_label = tk.Label(root, text="Password:", font=font_style, bg="light blue", fg="black")
+password_label.grid(row=3, column=1, padx=10, pady=2, sticky=tk.E)
+password_entry = tk.Entry(root, show="*", font=font_style)
+password_entry.grid(row=3, column=2, padx=10, pady=2, sticky=tk.W)
 
 # Create and place the login button
-login_button = tk.Button(root, text="Login", command=check_credentials)
-login_button.grid(row=4, column=0, columnspan=2, pady=20, padx=10, sticky=tk.N)
+login_button = tk.Button(root, text="Login", command=check_credentials, font=font_style)
+login_button.grid(row=4, column=1, columnspan=2, pady=20, padx=10, sticky=tk.N)
 
 # Run the application
-
 root.mainloop()
