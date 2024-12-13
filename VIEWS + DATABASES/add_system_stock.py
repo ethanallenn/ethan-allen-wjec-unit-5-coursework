@@ -1,8 +1,14 @@
 import tkinter as tk
-from tkinter import ttk
 import csv
 import sqlite3
 from datetime import datetime
+import os
+
+root = tk.Tk()
+root.geometry("1400x720")
+root.config(bg="light blue")
+root.resizable(False, False)
+
 
 class StockManagementApp:
     def __init__(self, root):
@@ -10,8 +16,8 @@ class StockManagementApp:
         self.root.title("Pharmacy Stock Management")
 
         # Create main frame
-        self.main_frame = ttk.Frame(root, padding="10")
-        self.main_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+        self.main_frame = tk.Frame(root, bg="light blue", padx=10, pady=10)
+        self.main_frame.pack(expand=True, fill=tk.BOTH)
 
         # Initialize row counter
         self.row_counter = 0
@@ -33,42 +39,40 @@ class StockManagementApp:
         self.stock_data = []
 
     def create_item_selection(self, frame, row):
-        ttk.Label(frame, text="Select Item:").grid(row=row, column=0, sticky=tk.W)
+        tk.Label(frame, text="Select Item:", bg="light blue", font=("Arial", 16)).grid(row=row, column=0, sticky=tk.N + tk.S + tk.E + tk.W)
 
         item_var = tk.StringVar()
-        item_dropdown = ttk.Combobox(frame, textvariable=item_var)
-        item_dropdown['values'] = self.get_item_list()
-        item_dropdown.grid(row=row, column=1, sticky=(tk.W, tk.E))
-        item_dropdown.config(width=50)
+        item_dropdown = tk.OptionMenu(frame, item_var, *self.get_item_list())
+        item_dropdown.grid(row=row, column=1, sticky=tk.N + tk.S + tk.E + tk.W)
+        item_dropdown.config(width=50, font=("Arial", 16))
 
         return item_var
 
     def create_stock_entry(self, frame, row):
-        ttk.Label(frame, text="Stock Count:").grid(row=row, column=2, sticky=tk.W)
+        tk.Label(frame, text="Stock Count:", bg="light blue", font=("Arial", 16)).grid(row=row, column=2, sticky=tk.N + tk.S + tk.E + tk.W)
 
         stock_var = tk.IntVar()
-        stock_entry = ttk.Entry(frame, textvariable=stock_var)
-        stock_entry.grid(row=row, column=3, sticky=(tk.W, tk.E))
-          # Adjust the width of the dropdown
+        stock_entry = tk.Entry(frame, textvariable=stock_var, font=("Arial", 16))
+        stock_entry.grid(row=row, column=3, sticky=tk.N + tk.S + tk.E + tk.W)
 
         return stock_var
 
     def create_add_stock_button(self, frame):
-        self.add_stock_button = ttk.Button(frame, text="Add Stock", command=self.add_stock)
-        self.add_stock_button.grid(row=1000, column=0, columnspan=2, pady=10, sticky=(tk.W, tk.E))
+        self.add_stock_button = tk.Button(frame, text="Add Stock", command=self.add_stock, font=("Arial", 16))
+        self.add_stock_button.grid(row=1000, column=0, columnspan=2, pady=10, sticky=tk.N + tk.S + tk.E + tk.W)
 
     def create_delete_stock_button(self, frame):
-        self.delete_stock_button = ttk.Button(frame, text="Delete Stock", command=self.delete_stock)
-        self.delete_stock_button.grid(row=1000, column=2, columnspan=2, pady=10, sticky=(tk.W, tk.E))
+        self.delete_stock_button = tk.Button(frame, text="Delete Stock", command=self.delete_stock, font=("Arial", 16))
+        self.delete_stock_button.grid(row=1000, column=2, columnspan=2, pady=10, sticky=tk.N + tk.S + tk.E + tk.W)
 
     def create_upload_stock_button(self, frame):
-        ttk.Label(frame, text="Stock Check Date:").grid(row=1001, column=0, sticky=tk.W)
+        tk.Label(frame, text="Stock Check Date:", bg="light blue", font=("Arial", 16)).grid(row=1001, column=0, sticky=tk.N + tk.S + tk.E + tk.W)
         self.date_var = tk.StringVar()
-        date_entry = ttk.Entry(frame, textvariable=self.date_var)
-        date_entry.grid(row=1001, column=1, sticky=(tk.W, tk.E))
+        date_entry = tk.Entry(frame, textvariable=self.date_var, font=("Arial", 16))
+        date_entry.grid(row=1001, column=1, sticky=tk.N + tk.S + tk.E + tk.W)
 
-        self.upload_stock_button = ttk.Button(frame, text="Upload Stock", command=self.upload_stock)
-        self.upload_stock_button.grid(row=1001, column=2, columnspan=2, pady=10, sticky=(tk.W, tk.E))
+        self.upload_stock_button = tk.Button(frame, text="Upload Stock", command=self.upload_stock, font=("Arial", 16))
+        self.upload_stock_button.grid(row=1001, column=2, columnspan=2, pady=10, sticky=tk.N + tk.S + tk.E + tk.W)
 
     def get_item_list(self):
         return [
@@ -132,9 +136,12 @@ class StockManagementApp:
             print("No stock data to upload.")
             return
 
+        # Ensure the directory exists
+        os.makedirs('csv_files', exist_ok=True)
+        filename = os.path.join('csv_files', f"{stock_check_date}.csv")
+
         # Save to CSV
-        filename = f"{stock_check_date}.csv"
-        with open(filename, mode='w', newline='') as file:
+        with open(filename, mode='w+', newline='') as file:
             writer = csv.writer(file)
             writer.writerow(["Item", "Stock Count"])
             writer.writerows(stock_entries)
@@ -152,7 +159,5 @@ class StockManagementApp:
         conn.close()
         print("Stock data saved to stock.db")
 
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = StockManagementApp(root)
-    root.mainloop()
+app = StockManagementApp(root)
+root.mainloop()

@@ -37,6 +37,12 @@ def add_user():
     finally:
         conn.close()
 
+
+def mv_open() -> None:
+    root.destroy()
+    import main_view
+
+
 # Tkinter setup
 root = tk.Tk()
 root.title("Add New User")
@@ -70,6 +76,9 @@ combo_access_level.grid(row=5, column=1, padx=10, pady=5, sticky="w")
 
 submit_button = tk.Button(root, text="Submit", command=add_user, font=font_style)
 submit_button.grid(row=6, column=0, columnspan=2, pady=20)
+
+back_button = tk.Button(root, text="Back", command=mv_open, font=font_style)
+back_button.grid(row=7, column=0, columnspan=2, pady=20)
 
 root.grid_columnconfigure(0, weight=1)
 root.grid_columnconfigure(1, weight=1)

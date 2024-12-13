@@ -16,6 +16,9 @@ def create_database():
 
 create_database()
 
+def exit_program():
+    root.destroy()
+
 def check_credentials():
     username = username_entry.get()
     password = password_entry.get()
@@ -69,6 +72,9 @@ password_entry.grid(row=3, column=2, padx=10, pady=2, sticky=tk.W)
 # Create and place the login button
 login_button = tk.Button(root, text="Login", command=check_credentials, font=font_style)
 login_button.grid(row=4, column=1, columnspan=2, pady=20, padx=10, sticky=tk.N)
+
+exit_button = tk.Button(root, text="Exit", command=exit_program, font=font_style)
+exit_button.grid(row=5, column=1, columnspan=2, pady=20, padx=10, sticky=tk.N)
 
 # Run the application
 root.mainloop()
