@@ -32,11 +32,9 @@ frame.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 font_style = ("Helvetica", 16)
 
 # Add User Button
-uMenu_button = tk.Button(frame, text="User Menu", font=font_style, command=open_user_menu, width=button_width, height=button_height)
-uMenu_button.pack(side=tk.LEFT, padx=10)
+uMenu_button = tk.Button(frame, text="User Menu", font=font_style, command=open_user_menu, width=button_width, height=button_height
+                         _button.pack(side=tk.LEFT, padx=10)
 
-# Logout Button
-logout_button = tk.Button(root, text="Logout", font=font_style, command=logout)
-logout_button.place(relx=1.0, rely=0.0, anchor='ne', x=-10, y=10)
+
 
 root.mainloop()
