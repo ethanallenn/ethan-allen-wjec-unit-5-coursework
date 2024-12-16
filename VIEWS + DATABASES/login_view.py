@@ -48,7 +48,7 @@ root.columnconfigure(1, weight=1)
 root.columnconfigure(2, weight=1)
 
 # Load and display the logo image
-logo_image = tk.PhotoImage(file="c:/Users/ethan/OneDrive - C2k/Year 14_24_25/Computer Science/A2 - Coursework/SoftwareDevelopment/ethan-allen-wjec-unit-5-coursework/VIEWS + DATABASES/Logo_new.png")
+logo_image = tk.PhotoImage(file="ethan-allen-wjec-unit-5-coursework/VIEWS + DATABASES/Logo_new.png")
 logo_label = tk.Label(root, image=logo_image, bg="light blue")
 logo_label.grid(row=0, column=0, rowspan=7, pady=20, padx=20, sticky=tk.NS)
 

@@ -1,163 +1,75 @@
-import tkinter as tk
-import csv
 import sqlite3
-from datetime import datetime
-import os
+import tkinter as tk
+
+# Connect to the database (or create it if it doesn't exist)
+conn = sqlite3.connect('stock_database.db')
+c = conn.cursor()
+
+# Create a table if it doesn't exist
+c.execute('''CREATE TABLE IF NOT EXISTS stock (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                item_name TEXT NOT NULL,
+                inner_qty INTEGER NOT NULL,
+                loose_qty INTEGER NOT NULL,
+                outer_qty INTEGER NOT NULL
+            )''')
+
+# List of common medications
+medications = ["Paracetamol", "Ibuprofen", "Aspirin", "Amoxicillin", "Metformin"]
+
+# Function to add stock to the database
+def add_stock():
+    item_name = selected_medication.get()
+    inner_qty = int(entry_inner_qty.get())
+    loose_qty = int(entry_loose_qty.get())
+    outer_qty = int(entry_outer_qty.get())
+
+    c.execute("INSERT INTO stock (item_name, inner_qty, loose_qty, outer_qty) VALUES (?, ?, ?, ?)",
+              (item_name, inner_qty, loose_qty, outer_qty))
+    conn.commit()
+
+    # Clear the entry fields after adding the stock
+    selected_medication.set(medications[0])
+    entry_inner_qty.delete(0, tk.END)
+    entry_loose_qty.delete(0, tk.END)
+    entry_outer_qty.delete(0, tk.END)
+
+# Function to handle window closing
+def on_closing():
+    conn.close()
+    root.destroy()
 
 root = tk.Tk()
+root.title("User Menu")
 root.geometry("1400x720")
 root.config(bg="light blue")
-root.resizable(False, False)
+root.resizable(False, False)  # Set the width and height of the window
 
+frame = tk.Frame(root, bg="light blue")
+frame.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+font_style = ("Helvetica", 16)
 
-class StockManagementApp:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("Pharmacy Stock Management")
+# Update the placement of the widgets to be inside the frame
+tk.Label(frame, text="Item Name:", font=font_style, bg="light blue").grid(row=0, column=0, padx=10, pady=5)
+selected_medication = tk.StringVar(value=medications[0])
+dropdown_medication = tk.OptionMenu(frame, selected_medication, *medications)
+dropdown_medication.config(font=font_style)
+dropdown_medication.grid(row=0, column=1, padx=10, pady=5)
 
-        # Create main frame
-        self.main_frame = tk.Frame(root, bg="light blue", padx=10, pady=10)
-        self.main_frame.pack(expand=True, fill=tk.BOTH)
+tk.Label(frame, text="Inner Quantity:", font=font_style, bg="light blue").grid(row=1, column=0, padx=10, pady=5)
+entry_inner_qty = tk.Entry(frame, font=font_style)
+entry_inner_qty.grid(row=1, column=1, padx=10, pady=5)
 
-        # Initialize row counter
-        self.row_counter = 0
+tk.Label(frame, text="Loose Quantity:", font=font_style, bg="light blue").grid(row=2, column=0, padx=10, pady=5)
+entry_loose_qty = tk.Entry(frame, font=font_style)
+entry_loose_qty.grid(row=2, column=1, padx=10, pady=5)
 
-        # Create initial item selection and stock entry
-        self.create_item_selection(self.main_frame, self.row_counter)
-        self.create_stock_entry(self.main_frame, self.row_counter)
+tk.Label(frame, text="Outer Quantity:", font=font_style, bg="light blue").grid(row=3, column=0, padx=10, pady=5)
+entry_outer_qty = tk.Entry(frame, font=font_style)
+entry_outer_qty.grid(row=3, column=1, padx=10, pady=5)
 
-        # Create add stock button
-        self.create_add_stock_button(self.main_frame)
+tk.Button(frame, text="Add Stock", command=add_stock, font=font_style).grid(row=4, column=0, columnspan=2, pady=10)
+tk.Button(frame, text="Exit", command=on_closing, font=font_style).grid(row=5, column=0, columnspan=2, pady=10)
 
-        # Create delete stock button
-        self.create_delete_stock_button(self.main_frame)
-
-        # Create upload stock button
-        self.create_upload_stock_button(self.main_frame)
-
-        # List to store stock data
-        self.stock_data = []
-
-    def create_item_selection(self, frame, row):
-        tk.Label(frame, text="Select Item:", bg="light blue", font=("Arial", 16)).grid(row=row, column=0, sticky=tk.N + tk.S + tk.E + tk.W)
-
-        item_var = tk.StringVar()
-        item_dropdown = tk.OptionMenu(frame, item_var, *self.get_item_list())
-        item_dropdown.grid(row=row, column=1, sticky=tk.N + tk.S + tk.E + tk.W)
-        item_dropdown.config(width=50, font=("Arial", 16))
-
-        return item_var
-
-    def create_stock_entry(self, frame, row):
-        tk.Label(frame, text="Stock Count:", bg="light blue", font=("Arial", 16)).grid(row=row, column=2, sticky=tk.N + tk.S + tk.E + tk.W)
-
-        stock_var = tk.IntVar()
-        stock_entry = tk.Entry(frame, textvariable=stock_var, font=("Arial", 16))
-        stock_entry.grid(row=row, column=3, sticky=tk.N + tk.S + tk.E + tk.W)
-
-        return stock_var
-
-    def create_add_stock_button(self, frame):
-        self.add_stock_button = tk.Button(frame, text="Add Stock", command=self.add_stock, font=("Arial", 16))
-        self.add_stock_button.grid(row=1000, column=0, columnspan=2, pady=10, sticky=tk.N + tk.S + tk.E + tk.W)
-
-    def create_delete_stock_button(self, frame):
-        self.delete_stock_button = tk.Button(frame, text="Delete Stock", command=self.delete_stock, font=("Arial", 16))
-        self.delete_stock_button.grid(row=1000, column=2, columnspan=2, pady=10, sticky=tk.N + tk.S + tk.E + tk.W)
-
-    def create_upload_stock_button(self, frame):
-        tk.Label(frame, text="Stock Check Date:", bg="light blue", font=("Arial", 16)).grid(row=1001, column=0, sticky=tk.N + tk.S + tk.E + tk.W)
-        self.date_var = tk.StringVar()
-        date_entry = tk.Entry(frame, textvariable=self.date_var, font=("Arial", 16))
-        date_entry.grid(row=1001, column=1, sticky=tk.N + tk.S + tk.E + tk.W)
-
-        self.upload_stock_button = tk.Button(frame, text="Upload Stock", command=self.upload_stock, font=("Arial", 16))
-        self.upload_stock_button.grid(row=1001, column=2, columnspan=2, pady=10, sticky=tk.N + tk.S + tk.E + tk.W)
-
-    def get_item_list(self):
-        return [
-            "Aches and Pains: Acetaminophen",
-            "Aches and Pains: Ibuprofen",
-            "Aches and Pains: Naproxen",
-            "Upset stomach and/or indigestion: Antacid",
-            "Upset stomach and/or indigestion: Polyethylene glycol",
-            "Upset stomach and/or indigestion: Loperamide",
-            "Upset stomach and/or indigestion: Bismuth subsalicylate",
-            "Cold and flu: Thermometer",
-            "Cold and flu: Pseudoephedrine",
-            "Cold and flu: Dextromethorphan",
-            "Cold and flu: Guaifenesin",
-            "Cold and flu: Nasal saline",
-            "Allergies: Diphenhydramine",
-            "Allergies: Loratadine",
-            "Allergies: Nasal saline",
-            "Allergies: Fluticasone propionate nasal spray",
-            "Sexually transmitted infections and pregnancy: Condoms",
-            "Sexually transmitted infections and pregnancy: Emergency contraception",
-            "Sexually transmitted infections and pregnancy: Pregnancy test",
-            "Wound care: Adhesive bandages",
-            "Wound care: Topical ointments",
-            "Wound care: Gauze",
-            "Wound care: Adhesive Tape",
-            "Acne: Benzoyl peroxide",
-            "Acne: Adapalene",
-            "Acne: Gentle skin-care cleanser"
-        ]
-
-    def add_stock(self):
-        item_var = self.create_item_selection(self.main_frame, self.row_counter)
-        stock_var = self.create_stock_entry(self.main_frame, self.row_counter)
-        self.stock_data.append((item_var, stock_var))
-        self.row_counter += 1
-
-    def delete_stock(self):
-        if self.row_counter > 0:
-            self.row_counter -= 1
-            item_var, stock_var = self.stock_data.pop()
-            item_var.set('')
-            stock_var.set(0)
-            for widget in self.main_frame.grid_slaves(row=self.row_counter):
-                widget.grid_forget()
-
-    def upload_stock(self):
-        stock_check_date = self.date_var.get()
-        if not stock_check_date:
-            print("Please enter the stock check date.")
-            return
-
-        stock_entries = []
-        for item_var, stock_var in self.stock_data:
-            item = item_var.get()
-            stock_count = stock_var.get()
-            if item and stock_count:
-                stock_entries.append((item, stock_count))
-
-        if not stock_entries:
-            print("No stock data to upload.")
-            return
-
-        # Ensure the directory exists
-        os.makedirs('csv_files', exist_ok=True)
-        filename = os.path.join('csv_files', f"{stock_check_date}.csv")
-
-        # Save to CSV
-        with open(filename, mode='w+', newline='') as file:
-            writer = csv.writer(file)
-            writer.writerow(["Item", "Stock Count"])
-            writer.writerows(stock_entries)
-        print(f"Stock data saved to {filename}")
-
-        # Save to SQLite database
-        conn = sqlite3.connect('stock.db')
-        cursor = conn.cursor()
-        cursor.execute('''CREATE TABLE IF NOT EXISTS stock
-                          (date TEXT, item TEXT, stock_count INTEGER)''')
-        for item, stock_count in stock_entries:
-            cursor.execute("INSERT INTO stock (date, item, stock_count) VALUES (?, ?, ?)",
-                           (stock_check_date, item, stock_count))
-        conn.commit()
-        conn.close()
-        print("Stock data saved to stock.db")
-
-app = StockManagementApp(root)
+root.protocol("WM_DELETE_WINDOW", on_closing)
 root.mainloop()

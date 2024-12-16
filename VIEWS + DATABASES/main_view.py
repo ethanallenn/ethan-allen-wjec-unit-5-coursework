@@ -1,19 +1,18 @@
 import tkinter as tk
-from tkinter import messagebox
-import sqlite3
 
 def logout():
     root.destroy()
     import login_view
 
-def add_system_stock():
+    import login_view
+    login_view
     import add_system_stock
-    root.destroy()
+    import add_system_stock
+    add_system_stock
 
 def open_user_menu():
     import user_menu_view
-    root.destroy()
-    
+    user_menu_view
 
 # Create the main window
 root = tk.Tk()
