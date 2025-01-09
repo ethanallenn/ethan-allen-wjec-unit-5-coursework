@@ -1,54 +1,122 @@
 import tkinter as tk
-from tkinter import messagebox
-from tkinter import *
+from tkinter import ttk
 
-root = tk.Tk()
-root.title("User Menu")
-root.geometry("1400x720")
-root.config(bg="light blue")
-root.resizable(False, False)  # Set the width and height of the window
-
-button_width = 20
-button_height = 7
-
-def back_button_mm_1 ():
+def back_button_mm_1():
     root.destroy()
     import main_view
 
-# Create a frame to center the buttons
-Frame = tk.Frame(root, bg="light blue")
-Frame.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
-
-font_style = ("Helvetica", 16)
-
-# Add User Button
 def open_user_add_form():
     root.destroy()
-    import add_system_user  # Assuming user_add_form.py is in the same directory
+    import add_system_user
 
 def delete_system_user():
-    import delete_system_user
     root.destroy()
+    import delete_system_user
 
 def edit_system_user():
-    import edit_system_user
     root.destroy()
+    import edit_system_user
 
-# Add User Button
-add_user_button = tk.Button(Frame, text="Add User", font=font_style, command=open_user_add_form, width=button_width, height=button_height)
-add_user_button.pack(side=tk.LEFT, padx=10)
+# Create the main window with modern dark theme
+root = tk.Tk()
+root.title("User Management")
+root.geometry("1400x720")
+root.config(bg="#1A1A1A")  # Darker background for modern look
+root.resizable(False, False)
 
-# Edit User Button
-edit_user_button = tk.Button(Frame, text="Edit User", font=font_style, command=edit_system_user, width=button_width, height=button_height)
-edit_user_button.pack(side=tk.LEFT, padx=10)
+# Configure modern styles
+style = ttk.Style()
+style.theme_use('clam')
 
-# Delete User Button
-delete_user_button = tk.Button(Frame, text="View/Delete Users", font=font_style, command=delete_system_user, width=button_width, height=button_height)
-delete_user_button.pack(side=tk.LEFT, padx=10)
+# Modern button styles with material design colors
+style.configure('Menu.TButton',
+                padding=20,
+                font=('Segoe UI', 16),
+                background='#2196F3',  # Material Blue
+                foreground='white',
+                width=25,
+                relief='flat',
+                borderwidth=0)
 
-# Back Button
-back_button = tk.Button(root, text="Back", font=font_style, command=back_button_mm_1)
-back_button.place(relx=1.0, rely=0.0, anchor='ne', x=-10, y=10)
-back_button.pack(side=tk.LEFT, padx=10)
+style.configure('Menu.TButton.Hover',
+                background='#1976D2',  # Darker Material Blue
+                relief='flat')
+
+style.configure('Back.TButton',
+                padding=10,
+                font=('Segoe UI', 12),
+                background='#FF5252',  # Material Red A200
+                foreground='white',
+                relief='flat',
+                borderwidth=0)
+
+style.configure('Back.TButton.Hover',
+                background='#FF1744',  # Material Red A400
+                relief='flat')
+
+style.configure('Title.TLabel',
+                font=('Segoe UI', 36, 'bold'),
+                background='#1A1A1A',
+                foreground='#FFFFFF')
+
+# Create main frame with modern elevation effect
+main_frame = ttk.Frame(root, style='Card.TFrame')
+main_frame.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+
+style.configure('Card.TFrame',
+                background='#2D2D2D',
+                relief='solid',
+                borderwidth=0,
+                padding=20)
+
+# Modern title with subtle shadow
+title_label = ttk.Label(root,
+                       text="User Management",
+                       style='Title.TLabel')
+title_label.pack(pady=50)
+
+# Modern material design buttons with consistent spacing
+add_user_button = ttk.Button(main_frame,
+                            text="Add User",
+                            style='Menu.TButton',
+                            command=open_user_add_form)
+add_user_button.pack(pady=25, padx=50)
+
+edit_user_button = ttk.Button(main_frame,
+                             text="Edit User",
+                             style='Menu.TButton',
+                             command=edit_system_user)
+edit_user_button.pack(pady=25, padx=50)
+
+delete_user_button = ttk.Button(main_frame,
+                               text="View/Delete Users",
+                               style='Menu.TButton',
+                               command=delete_system_user)
+delete_user_button.pack(pady=25, padx=50)
+
+# Modern floating back button
+back_button = ttk.Button(root,
+                        text="Back",
+                        style='Back.TButton',
+                        command=back_button_mm_1)
+back_button.place(x=30, y=30)
+
+# Smooth hover transitions
+def on_enter(e):
+    if e.widget['style'] == 'Menu.TButton':
+        e.widget.configure(style='Menu.TButton.Hover')
+    elif e.widget['style'] == 'Back.TButton':
+        e.widget.configure(style='Back.TButton.Hover')
+
+def on_leave(e):
+    if e.widget['style'] == 'Menu.TButton.Hover':
+        e.widget.configure(style='Menu.TButton')
+    elif e.widget['style'] == 'Back.TButton.Hover':
+        e.widget.configure(style='Back.TButton')
+
+# Bind hover effects for interactive feedback
+for button in [add_user_button, edit_user_button, delete_user_button, back_button]:
+    button.bind('<Enter>', on_enter)
+    button.bind('<Leave>', on_leave)
 
 root.mainloop()

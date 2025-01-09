@@ -1,8 +1,8 @@
 import tkinter as tk
-import sqlite3
 from tkinter import messagebox
-from tkinter import *
-
+import sqlite3
+from tkinter import ttk
+import os
 
 def create_database():
     conn = sqlite3.connect('users.db')
@@ -28,8 +28,8 @@ def check_credentials():
     result = c.fetchone()
     conn.close()
     if result:
-        root.destroy()  # Close the login window
-        import main_view # Launch the other file
+        root.destroy()
+        import main_view
     else:
         messagebox.showerror("Login Failed", "Invalid credentials. Please try again.")
 
@@ -37,44 +37,76 @@ def check_credentials():
 root = tk.Tk()
 root.title("Calle Pharmacy Login")
 root.geometry("1280x720")
-root.config(bg="light blue")
-root.resizable(False, False)
+root.config(bg="#f0f0f0")  # Light gray background
+root.resizable(True, True)
 
-# Configure grid to center widgets
-for i in range(7):
-    root.rowconfigure(i, weight=1)
-root.columnconfigure(0, weight=1)
-root.columnconfigure(1, weight=1)
-root.columnconfigure(2, weight=1)
+# Create main frame
+main_frame = tk.Frame(root, bg="#f0f0f0")
+main_frame.place(relx=0.5, rely=0.5, anchor="center")
 
 # Load and display the logo image
-logo_image = tk.PhotoImage(file="ethan-allen-wjec-unit-5-coursework/VIEWS + DATABASES/Logo_new.png")
-logo_label = tk.Label(root, image=logo_image, bg="light blue")
-logo_label.grid(row=0, column=0, rowspan=7, pady=20, padx=20, sticky=tk.NS)
+script_dir = os.path.dirname(os.path.abspath(__file__))
+logo_path = os.path.join(script_dir, "Logo_new.png")
+logo_image = tk.PhotoImage(file=logo_path)
+logo_label = tk.Label(main_frame, image=logo_image, bg="#f0f0f0")
+logo_label.pack(pady=20)
 
-font_style = ("Helvetica", 16)
+# Create login frame
+login_frame = tk.Frame(main_frame, bg="white", padx=40, pady=40)
+login_frame.pack(pady=20)
 
-text_label = tk.Label(root, text="Login", bg="light blue", fg="black", font=("Helvetica", 16, "bold"))
-text_label.grid(row=1, column=1, columnspan=2, pady=10, sticky=tk.EW)
+# Add shadow effect
+shadow_frame = tk.Frame(main_frame, bg="#d0d0d0")
+shadow_frame.place(in_=login_frame, x=5, y=5, relwidth=1, relheight=1)
+login_frame.lift()
 
-# Create and place the username label and entry
-username_label = tk.Label(root, text="Username:", font=font_style, bg="light blue", fg="black")
-username_label.grid(row=2, column=1, padx=10, pady=2, sticky=tk.E)
-username_entry = tk.Entry(root, font=font_style)
-username_entry.grid(row=2, column=2, padx=10, pady=2, sticky=tk.W)
+# Login header
+header_label = tk.Label(login_frame, text="Login", font=("Helvetica", 24, "bold"), bg="white", fg="#333333")
+header_label.pack(pady=(0, 20))
 
-# Create and place the password label and entry
-password_label = tk.Label(root, text="Password:", font=font_style, bg="light blue", fg="black")
-password_label.grid(row=3, column=1, padx=10, pady=2, sticky=tk.E)
-password_entry = tk.Entry(root, show="*", font=font_style)
-password_entry.grid(row=3, column=2, padx=10, pady=2, sticky=tk.W)
+# Style for entry fields
+style = ttk.Style()
+style.configure("Custom.TEntry", padding=10)
 
-# Create and place the login button
-login_button = tk.Button(root, text="Login", command=check_credentials, font=font_style)
-login_button.grid(row=4, column=1, columnspan=2, pady=20, padx=10, sticky=tk.N)
+# Username entry
+username_frame = tk.Frame(login_frame, bg="white")
+username_frame.pack(fill="x", pady=10)
+username_label = tk.Label(username_frame, text="Username", font=("Helvetica", 12), bg="white", fg="#666666")
+username_label.pack(anchor="w")
+username_entry = ttk.Entry(username_frame, font=("Helvetica", 12), style="Custom.TEntry", width=30)
+username_entry.pack(fill="x", pady=(5, 0))
 
-exit_button = tk.Button(root, text="Exit", command=exit_program, font=font_style)
-exit_button.grid(row=5, column=1, columnspan=2, pady=20, padx=10, sticky=tk.N)
+# Password entry
+password_frame = tk.Frame(login_frame, bg="white")
+password_frame.pack(fill="x", pady=10)
+password_label = tk.Label(password_frame, text="Password", font=("Helvetica", 12), bg="white", fg="#666666")
+password_label.pack(anchor="w")
+password_entry = ttk.Entry(password_frame, font=("Helvetica", 12), show="•", style="Custom.TEntry", width=30)
+password_entry.pack(fill="x", pady=(5, 0))
+
+# Button style
+button_style = {
+    "font": ("Helvetica", 12),
+    "borderwidth": 0,
+    "padx": 20,
+    "pady": 10,
+    "cursor": "hand2"
+}
+
+# Login button
+login_button = tk.Button(login_frame, text="Login", bg="#4CAF50", fg="white",
+                        activebackground="#45a049", **button_style,
+                        command=check_credentials)
+login_button.pack(pady=(20, 10), fill="x")
+
+# Exit button
+exit_button = tk.Button(login_frame, text="Exit", bg="#f44336", fg="white",
+                       activebackground="#da190b", **button_style,
+                       command=exit_program)
+exit_button.pack(fill="x")
+
+# Bind Enter key to login
+root.bind('<Return>', lambda event: check_credentials())
 
 # Run the application
 root.mainloop()

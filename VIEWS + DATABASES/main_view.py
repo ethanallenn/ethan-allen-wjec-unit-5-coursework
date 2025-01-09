@@ -1,14 +1,9 @@
 import tkinter as tk
+from tkinter import ttk
 
 def logout():
     root.destroy()
     import login_view
-
-    import login_view
-    login_view
-    import add_system_stock
-    import add_system_stock
-    add_system_stock
 
 def open_user_menu():
     import user_menu_view
@@ -20,30 +15,60 @@ def open_stock_menu():
 
 # Create the main window
 root = tk.Tk()
-root.title("Main Menu")
+root.title("Calle Pharmacy Management System")
 root.geometry("1400x720")
-root.config(bg="light blue")
-root.resizable(False, False)  # Set the width and height of the window
+root.config(bg="#f0f0f0")
+root.resizable(False, False)
 
-button_width = 20
-button_height = 7
+# Create styles
+style = ttk.Style()
+style.theme_use('clam')
+style.configure('Menu.TButton',
+                padding=20,
+                font=('Helvetica', 16),
+                background='#4a90e2',
+                foreground='white',
+                width=25)
+style.configure('Logout.TButton',
+                padding=10,
+                font=('Helvetica', 12),
+                background='#f44336',
+                foreground='white')
 
-# Create a frame to center the buttons
-frame = tk.Frame(root, bg="light blue")
-frame.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+# Create main frame
+main_frame = ttk.Frame(root)
+main_frame.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
-font_style = ("Helvetica", 16)
+# Title
+title_label = ttk.Label(root,
+                       text="Main Menu",
+                       font=('Helvetica', 32, 'bold'),
+                       background='#f0f0f0')
+title_label.pack(pady=50)
 
-# Add User Button
-uMenu_button = tk.Button(frame, text="User Menu", font=font_style, command=open_user_menu, width=button_width, height=button_height)
-uMenu_button.pack(side=tk.LEFT, padx=10)
+# Menu buttons frame
+button_frame = ttk.Frame(main_frame)
+button_frame.pack(pady=20)
 
-# Add Stock Button
-sMenu = tk.Button(frame, text="Stock Menu", font=font_style, command=open_stock_menu, width=button_width, height=button_height)
-sMenu.pack(side=tk.RIGHT, padx=10)
+# User Menu Button
+user_menu_btn = ttk.Button(button_frame,
+                          text="User Management",
+                          style='Menu.TButton',
+                          command=open_user_menu)
+user_menu_btn.pack(side=tk.LEFT, padx=20, pady=10)
+
+# Stock Menu Button
+stock_menu_btn = ttk.Button(button_frame,
+                           text="Stock Management",
+                           style='Menu.TButton',
+                           command=open_stock_menu)
+stock_menu_btn.pack(side=tk.LEFT, padx=20, pady=10)
 
 # Logout Button
-logout_button = tk.Button(root, text="Logout", font=font_style, command=logout)
-logout_button.place(relx=1.0, rely=0.0, anchor='ne', x=-10, y=10)
+logout_btn = ttk.Button(root,
+                       text="Logout",
+                       style='Logout.TButton',
+                       command=logout)
+logout_btn.place(relx=0.95, rely=0.05, anchor='ne')
 
 root.mainloop()

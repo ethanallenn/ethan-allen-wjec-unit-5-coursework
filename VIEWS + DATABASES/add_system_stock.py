@@ -1,5 +1,6 @@
 import sqlite3
 import tkinter as tk
+from tkinter import ttk
 import csv
 from datetime import datetime
 
@@ -45,32 +46,59 @@ def on_closing():
     root.destroy()
 
 root = tk.Tk()
-root.title("User Menu")
+root.title("Pharmacy Stock Management")
 root.geometry("1400x720")
-root.config(bg="light blue")
-root.resizable(False, False)  # Set the width and height of the window
+root.config(bg="#f0f0f0")
+root.resizable(False, False)
 
-frame = tk.Frame(root, bg="light blue")
-frame.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
-font_style = ("Helvetica", 16)
+# Create a style for ttk widgets
+style = ttk.Style()
+style.theme_use('clam')
+style.configure('TFrame', background='#f0f0f0')
+style.configure('TButton', 
+                padding=10, 
+                font=('Helvetica', 12),
+                background='#4a90e2',
+                foreground='white')
+style.configure('TEntry', 
+                padding=5,
+                font=('Helvetica', 12))
+style.configure('TOptionMenu',
+                padding=5,
+                font=('Helvetica', 12))
+
+main_frame = ttk.Frame(root)
+main_frame.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+
+# Header labels with modern styling
+headers = ["Medication", "Inner Qty", "Loose Qty", "Outer Qty"]
+for i, header in enumerate(headers):
+    label = ttk.Label(main_frame, 
+                      text=header,
+                      font=('Helvetica', 14, 'bold'),
+                      background='#f0f0f0')
+    label.grid(row=0, column=i, padx=15, pady=(0, 20))
 
 # Function to add a new row for entering stock
 def add_new_row():
-    row = len(frame.grid_slaves()) // 5
+    row = len(main_frame.grid_slaves()) // 5
     selected_medication = tk.StringVar(value=medications[0])
-    tk.OptionMenu(frame, selected_medication, *medications).grid(row=row, column=0, padx=10, pady=5)
-    tk.Entry(frame, font=font_style).grid(row=row, column=1, padx=10, pady=5)
-    tk.Entry(frame, font=font_style).grid(row=row, column=2, padx=10, pady=5)
-    tk.Entry(frame, font=font_style).grid(row=row, column=3, padx=10, pady=5)
+    
+    medication_menu = ttk.OptionMenu(main_frame, selected_medication, medications[0], *medications)
+    medication_menu.grid(row=row, column=0, padx=15, pady=5)
+    
+    for i in range(1, 4):
+        entry = ttk.Entry(main_frame, font=('Helvetica', 12))
+        entry.grid(row=row, column=i, padx=15, pady=5)
 
 # Function to save stock to CSV
 def save_stock():
     rows = []
-    for i in range(1, len(frame.grid_slaves()) // 5):
-        item_name = frame.grid_slaves(row=i, column=0)[0].get()
-        inner_qty = frame.grid_slaves(row=i, column=1)[0].get()
-        loose_qty = frame.grid_slaves(row=i, column=2)[0].get()
-        outer_qty = frame.grid_slaves(row=i, column=3)[0].get()
+    for i in range(1, len(main_frame.grid_slaves()) // 5):
+        item_name = main_frame.grid_slaves(row=i, column=0)[0].get()
+        inner_qty = main_frame.grid_slaves(row=i, column=1)[0].get()
+        loose_qty = main_frame.grid_slaves(row=i, column=2)[0].get()
+        outer_qty = main_frame.grid_slaves(row=i, column=3)[0].get()
         rows.append([item_name, inner_qty, loose_qty, outer_qty])
 
     filename = f"stock_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
@@ -80,17 +108,35 @@ def save_stock():
         writer.writerows(rows)
 
     # Clear the entry fields after saving the stock
-    for widget in frame.winfo_children():
+    for widget in main_frame.winfo_children():
         widget.destroy()
     add_new_row()
 
+# Button frame
+button_frame = ttk.Frame(main_frame)
+button_frame.grid(row=0, column=4, rowspan=3, padx=(30, 0), sticky='n')
+
+# Add styled buttons
+add_btn = ttk.Button(button_frame, 
+                     text="Add Stock",
+                     command=add_stock,
+                     style='TButton')
+add_btn.pack(pady=5)
+
+save_btn = ttk.Button(button_frame,
+                      text="Save Stock",
+                      command=save_stock,
+                      style='TButton')
+save_btn.pack(pady=5)
+
+exit_btn = ttk.Button(button_frame,
+                      text="Exit",
+                      command=on_closing,
+                      style='TButton')
+exit_btn.pack(pady=5)
+
 # Add initial row
 add_new_row()
-
-# Add buttons for adding new row and saving stock
-tk.Button(frame, text="Add Stock", command=add_stock, font=font_style).grid(row=0, column=4, padx=10, pady=5)
-tk.Button(frame, text="Save Stock", command=save_stock, font=font_style).grid(row=1, column=4, padx=10, pady=5)
-tk.Button(frame, text="Exit", command=on_closing, font=font_style).grid(row=2, column=4, padx=10, pady=5)
 
 root.protocol("WM_DELETE_WINDOW", on_closing)
 root.mainloop()

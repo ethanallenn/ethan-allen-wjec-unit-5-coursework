@@ -37,57 +37,79 @@ def add_user():
     finally:
         conn.close()
 
-
 def mv_open() -> None:
     root.destroy()
     import main_view
 
-
 # Tkinter setup
 root = tk.Tk()
 root.title("Add New User")
-root.geometry("1280x720")
-root.config(bg="light blue")
+root.geometry("1400x720")
+root.config(bg="#f0f0f0")
 root.resizable(False, False)
 
-font_style = ("Helvetica", 16)
+# Create a style for ttk widgets
+style = ttk.Style()
+style.theme_use('clam')
+style.configure('TFrame', background='#f0f0f0')
+style.configure('TButton', 
+                padding=10,
+                font=('Helvetica', 12),
+                background='#4a90e2',
+                foreground='white')
+style.configure('TEntry',
+                padding=5,
+                font=('Helvetica', 12))
+style.configure('TLabel',
+                font=('Helvetica', 12),
+                background='#f0f0f0')
 
-tk.Label(root, text="Add New User:", font=("Helvetica", 20, "bold"), bg="light blue").grid(row=0, column=0, columnspan=2, pady=10)
+# Create main frame
+main_frame = ttk.Frame(root)
+main_frame.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
-tk.Label(root, text="Username:", font=font_style, bg="light blue").grid(row=1, column=0, padx=10, pady=5, sticky="e")
-entry_username = tk.Entry(root, font=font_style)
-entry_username.grid(row=1, column=1, padx=10, pady=5, sticky="w")
+# Title
+title_label = ttk.Label(main_frame, 
+                        text="Add New User",
+                        font=('Helvetica', 20, 'bold'),
+                        background='#f0f0f0')
+title_label.grid(row=0, column=0, columnspan=2, pady=(0, 30))
 
-tk.Label(root, text="Password:", font=font_style, bg="light blue").grid(row=2, column=0, padx=10, pady=5, sticky="e")
-entry_password = tk.Entry(root, show="*", font=font_style)
-entry_password.grid(row=2, column=1, padx=10, pady=5, sticky="w")
+# Form fields
+fields = [
+    ("Username:", "entry_username"),
+    ("Password:", "entry_password", "*"),
+    ("First Name:", "entry_first_name"),
+    ("Last Name:", "entry_last_name"),
+    ("Access Level:", "combo_access_level")
+]
 
-tk.Label(root, text="First Name", font=font_style, bg="light blue").grid(row=3, column=0, padx=10, pady=5, sticky="e")
-entry_first_name = tk.Entry(root, font=font_style)
-entry_first_name.grid(row=3, column=1, padx=10, pady=5, sticky="w")
+for i, field in enumerate(fields):
+    label = ttk.Label(main_frame, text=field[0])
+    label.grid(row=i+1, column=0, padx=15, pady=10, sticky='e')
+    
+    if field[0] == "Access Level:":
+        combo_access_level = ttk.Combobox(main_frame, 
+                                         values=["Administrator", "Manager", "Pharmacist", "Team Member"],
+                                         font=('Helvetica', 12),
+                                         state='readonly')
+        combo_access_level.grid(row=i+1, column=1, padx=15, pady=10, sticky='w')
+        combo_access_level.set("Select Access Level")
+    else:
+        if len(field) == 3:  # Password field
+            globals()[field[1]] = ttk.Entry(main_frame, show=field[2], font=('Helvetica', 12))
+        else:
+            globals()[field[1]] = ttk.Entry(main_frame, font=('Helvetica', 12))
+        globals()[field[1]].grid(row=i+1, column=1, padx=15, pady=10, sticky='w')
 
-tk.Label(root, text="Last Name", font=font_style, bg="light blue").grid(row=4, column=0, padx=10, pady=5, sticky="e")
-entry_last_name = tk.Entry(root, font=font_style)
-entry_last_name.grid(row=4, column=1, padx=10, pady=5, sticky="w")
+# Buttons
+button_frame = ttk.Frame(main_frame)
+button_frame.grid(row=6, column=0, columnspan=2, pady=30)
 
-tk.Label(root, text="Access Level", font=font_style, bg="light blue").grid(row=5, column=0, padx=10, pady=5, sticky="e")
-combo_access_level = ttk.Combobox(root, values=["Administrator", "Manager", "Pharmacist", "Team Member"], font=font_style)
-combo_access_level.grid(row=5, column=1, padx=10, pady=5, sticky="w")
+submit_button = ttk.Button(button_frame, text="Submit", command=add_user, style='TButton')
+submit_button.pack(side=tk.LEFT, padx=10)
 
-submit_button = tk.Button(root, text="Submit", command=add_user, font=font_style)
-submit_button.grid(row=6, column=0, columnspan=2, pady=20)
-
-back_button = tk.Button(root, text="Back", command=mv_open, font=font_style)
-back_button.grid(row=7, column=0, columnspan=2, pady=20)
-
-root.grid_columnconfigure(0, weight=1)
-root.grid_columnconfigure(1, weight=1)
-root.grid_rowconfigure(0, weight=1)
-root.grid_rowconfigure(1, weight=1)
-root.grid_rowconfigure(2, weight=1)
-root.grid_rowconfigure(3, weight=1)
-root.grid_rowconfigure(4, weight=1)
-root.grid_rowconfigure(5, weight=1)
-root.grid_rowconfigure(6, weight=1)
+back_button = ttk.Button(button_frame, text="Back", command=mv_open, style='TButton')
+back_button.pack(side=tk.LEFT, padx=10)
 
 root.mainloop()
