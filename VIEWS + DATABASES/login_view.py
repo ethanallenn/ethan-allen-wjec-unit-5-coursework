@@ -40,23 +40,29 @@ root.geometry("1280x720")
 root.config(bg="#f0f0f0")  # Light gray background
 root.resizable(True, True)
 
-# Create main frame
+# Create main frame as a container for logo and login
 main_frame = tk.Frame(root, bg="#f0f0f0")
 main_frame.place(relx=0.5, rely=0.5, anchor="center")
 
-# Load and display the logo image
+# Create a horizontal container frame
+container_frame = tk.Frame(main_frame, bg="#f0f0f0")
+container_frame.pack()
+
+# Load and display the logo image on the left
 script_dir = os.path.dirname(os.path.abspath(__file__))
 logo_path = os.path.join(script_dir, "Logo_new.png")
 logo_image = tk.PhotoImage(file=logo_path)
-logo_label = tk.Label(main_frame, image=logo_image, bg="#f0f0f0")
-logo_label.pack(pady=20)
+# Resize logo to fit nicely
+logo_image = logo_image.subsample(2, 2)  # Adjust subsample values as needed
+logo_label = tk.Label(container_frame, image=logo_image, bg="#f0f0f0")
+logo_label.pack(side="left", padx=(0, 40))
 
-# Create login frame
-login_frame = tk.Frame(main_frame, bg="white", padx=40, pady=40)
-login_frame.pack(pady=20)
+# Create login frame on the right
+login_frame = tk.Frame(container_frame, bg="white", padx=40, pady=40)
+login_frame.pack(side="left", pady=20)
 
 # Add shadow effect
-shadow_frame = tk.Frame(main_frame, bg="#d0d0d0")
+shadow_frame = tk.Frame(container_frame, bg="#d0d0d0")
 shadow_frame.place(in_=login_frame, x=5, y=5, relwidth=1, relheight=1)
 login_frame.lift()
 
@@ -94,13 +100,13 @@ button_style = {
 }
 
 # Login button
-login_button = tk.Button(login_frame, text="Login", bg="#4CAF50", fg="white",
+login_button = tk.Button(login_frame, text="Login", bg="#4CAF50", fg="black",
                         activebackground="#45a049", **button_style,
                         command=check_credentials)
 login_button.pack(pady=(20, 10), fill="x")
 
 # Exit button
-exit_button = tk.Button(login_frame, text="Exit", bg="#f44336", fg="white",
+exit_button = tk.Button(login_frame, text="Exit", bg="#f44336", fg="black",
                        activebackground="#da190b", **button_style,
                        command=exit_program)
 exit_button.pack(fill="x")
