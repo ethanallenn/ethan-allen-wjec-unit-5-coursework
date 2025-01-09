@@ -14,6 +14,10 @@ def open_user_menu():
     import user_menu_view
     user_menu_view
 
+def open_stock_menu():
+    import stock_menu_view
+    stock_menu_view
+
 # Create the main window
 root = tk.Tk()
 root.title("Main Menu")
@@ -33,6 +37,10 @@ font_style = ("Helvetica", 16)
 # Add User Button
 uMenu_button = tk.Button(frame, text="User Menu", font=font_style, command=open_user_menu, width=button_width, height=button_height)
 uMenu_button.pack(side=tk.LEFT, padx=10)
+
+# Add Stock Button
+sMenu = tk.Button(frame, text="Stock Menu", font=font_style, command=open_stock_menu, width=button_width, height=button_height)
+sMenu.pack(side=tk.RIGHT, padx=10)
 
 # Logout Button
 logout_button = tk.Button(root, text="Logout", font=font_style, command=logout)

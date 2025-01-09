@@ -1,5 +1,7 @@
 import sqlite3
 import tkinter as tk
+import csv
+from datetime import datetime
 
 # Connect to the database (or create it if it doesn't exist)
 conn = sqlite3.connect('stock_database.db')
@@ -34,6 +36,9 @@ def add_stock():
     entry_loose_qty.delete(0, tk.END)
     entry_outer_qty.delete(0, tk.END)
 
+    # Add a new row for the next entry
+    add_new_row()
+
 # Function to handle window closing
 def on_closing():
     conn.close()
@@ -49,27 +54,43 @@ frame = tk.Frame(root, bg="light blue")
 frame.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 font_style = ("Helvetica", 16)
 
-# Update the placement of the widgets to be inside the frame
-tk.Label(frame, text="Item Name:", font=font_style, bg="light blue").grid(row=0, column=0, padx=10, pady=5)
-selected_medication = tk.StringVar(value=medications[0])
-dropdown_medication = tk.OptionMenu(frame, selected_medication, *medications)
-dropdown_medication.config(font=font_style)
-dropdown_medication.grid(row=0, column=1, padx=10, pady=5)
+# Function to add a new row for entering stock
+def add_new_row():
+    row = len(frame.grid_slaves()) // 5
+    selected_medication = tk.StringVar(value=medications[0])
+    tk.OptionMenu(frame, selected_medication, *medications).grid(row=row, column=0, padx=10, pady=5)
+    tk.Entry(frame, font=font_style).grid(row=row, column=1, padx=10, pady=5)
+    tk.Entry(frame, font=font_style).grid(row=row, column=2, padx=10, pady=5)
+    tk.Entry(frame, font=font_style).grid(row=row, column=3, padx=10, pady=5)
 
-tk.Label(frame, text="Inner Quantity:", font=font_style, bg="light blue").grid(row=1, column=0, padx=10, pady=5)
-entry_inner_qty = tk.Entry(frame, font=font_style)
-entry_inner_qty.grid(row=1, column=1, padx=10, pady=5)
+# Function to save stock to CSV
+def save_stock():
+    rows = []
+    for i in range(1, len(frame.grid_slaves()) // 5):
+        item_name = frame.grid_slaves(row=i, column=0)[0].get()
+        inner_qty = frame.grid_slaves(row=i, column=1)[0].get()
+        loose_qty = frame.grid_slaves(row=i, column=2)[0].get()
+        outer_qty = frame.grid_slaves(row=i, column=3)[0].get()
+        rows.append([item_name, inner_qty, loose_qty, outer_qty])
 
-tk.Label(frame, text="Loose Quantity:", font=font_style, bg="light blue").grid(row=2, column=0, padx=10, pady=5)
-entry_loose_qty = tk.Entry(frame, font=font_style)
-entry_loose_qty.grid(row=2, column=1, padx=10, pady=5)
+    filename = f"stock_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
+    with open(filename, mode='w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(["Item Name", "Inner Quantity", "Loose Quantity", "Outer Quantity"])
+        writer.writerows(rows)
 
-tk.Label(frame, text="Outer Quantity:", font=font_style, bg="light blue").grid(row=3, column=0, padx=10, pady=5)
-entry_outer_qty = tk.Entry(frame, font=font_style)
-entry_outer_qty.grid(row=3, column=1, padx=10, pady=5)
+    # Clear the entry fields after saving the stock
+    for widget in frame.winfo_children():
+        widget.destroy()
+    add_new_row()
 
-tk.Button(frame, text="Add Stock", command=add_stock, font=font_style).grid(row=4, column=0, columnspan=2, pady=10)
-tk.Button(frame, text="Exit", command=on_closing, font=font_style).grid(row=5, column=0, columnspan=2, pady=10)
+# Add initial row
+add_new_row()
+
+# Add buttons for adding new row and saving stock
+tk.Button(frame, text="Add Stock", command=add_stock, font=font_style).grid(row=0, column=4, padx=10, pady=5)
+tk.Button(frame, text="Save Stock", command=save_stock, font=font_style).grid(row=1, column=4, padx=10, pady=5)
+tk.Button(frame, text="Exit", command=on_closing, font=font_style).grid(row=2, column=4, padx=10, pady=5)
 
 root.protocol("WM_DELETE_WINDOW", on_closing)
 root.mainloop()
