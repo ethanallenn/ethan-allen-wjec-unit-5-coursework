@@ -22,7 +22,7 @@ def exit_program():
 def check_credentials():
     username = username_entry.get()
     password = password_entry.get()
-    conn = sqlite3.connect('users.db')
+    conn = sqlite3.connect('users.db')q
     c = conn.cursor()
     c.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password))
     result = c.fetchone()

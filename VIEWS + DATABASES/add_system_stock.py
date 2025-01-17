@@ -1,14 +1,11 @@
 import sqlite3
 import tkinter as tk
-from tkinter import ttk
-import csv
+from tkinter import messagebox, ttk
 from datetime import datetime
 
-# Connect to the database (or create it if it doesn't exist)
+# Database setup
 conn = sqlite3.connect('stock_database.db')
 c = conn.cursor()
-
-# Create a table if it doesn't exist
 c.execute('''CREATE TABLE IF NOT EXISTS stock (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 item_name TEXT NOT NULL,
@@ -16,127 +13,110 @@ c.execute('''CREATE TABLE IF NOT EXISTS stock (
                 loose_qty INTEGER NOT NULL,
                 outer_qty INTEGER NOT NULL
             )''')
+conn.commit()
 
 # List of common medications
 medications = ["Paracetamol", "Ibuprofen", "Aspirin", "Amoxicillin", "Metformin"]
 
 # Function to add stock to the database
 def add_stock():
-    item_name = selected_medication.get()
-    inner_qty = int(entry_inner_qty.get())
-    loose_qty = int(entry_loose_qty.get())
-    outer_qty = int(entry_outer_qty.get())
+    item_name = combo_medication.get()
+    inner_qty = entry_inner_qty.get()
+    loose_qty = entry_loose_qty.get()
+    outer_qty = entry_outer_qty.get()
 
-    c.execute("INSERT INTO stock (item_name, inner_qty, loose_qty, outer_qty) VALUES (?, ?, ?, ?)",
-              (item_name, inner_qty, loose_qty, outer_qty))
-    conn.commit()
+    if not item_name or not inner_qty or not loose_qty or not outer_qty:
+        messagebox.showerror("Error", "All fields are required")
+        return
 
-    # Clear the entry fields after adding the stock
-    selected_medication.set(medications[0])
-    entry_inner_qty.delete(0, tk.END)
-    entry_loose_qty.delete(0, tk.END)
-    entry_outer_qty.delete(0, tk.END)
+    try:
+        inner_qty = int(inner_qty)
+        loose_qty = int(loose_qty)
+        outer_qty = int(outer_qty)
+    except ValueError:
+        messagebox.showerror("Error", "Quantities must be numbers")
+        return
 
-    # Add a new row for the next entry
-    add_new_row()
+    try:
+        c.execute("INSERT INTO stock (item_name, inner_qty, loose_qty, outer_qty) VALUES (?, ?, ?, ?)",
+                  (item_name, inner_qty, loose_qty, outer_qty))
+        conn.commit()
+        messagebox.showinfo("Success", "Stock added successfully")
+        
+        # Clear entries
+        combo_medication.set(medications[0])
+        entry_inner_qty.delete(0, tk.END)
+        entry_loose_qty.delete(0, tk.END)
+        entry_outer_qty.delete(0, tk.END)
+    except sqlite3.Error:
+        messagebox.showerror("Error", "Failed to add stock")
 
-# Function to handle window closing
-def on_closing():
-    conn.close()
+def mv_open():
     root.destroy()
+    import main_view
 
+# Tkinter setup
 root = tk.Tk()
-root.title("Pharmacy Stock Management")
+root.title("Add Stock")
 root.geometry("1400x720")
 root.config(bg="#f0f0f0")
 root.resizable(False, False)
 
-# Create a style for ttk widgets
+# Create styles
 style = ttk.Style()
 style.theme_use('clam')
-style.configure('TFrame', background='#f0f0f0')
-style.configure('TButton', 
-                padding=10, 
-                font=('Helvetica', 12),
-                background='#4a90e2',
-                foreground='white')
-style.configure('TEntry', 
-                padding=5,
+style.configure('TLabel',
+                background='#f0f0f0',
                 font=('Helvetica', 12))
-style.configure('TOptionMenu',
-                padding=5,
+style.configure('TButton',
+                padding=10,
                 font=('Helvetica', 12))
+style.configure('Header.TLabel',
+                font=('Helvetica', 32, 'bold'))
 
+# Main container
 main_frame = ttk.Frame(root)
 main_frame.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
-# Header labels with modern styling
-headers = ["Medication", "Inner Qty", "Loose Qty", "Outer Qty"]
-for i, header in enumerate(headers):
-    label = ttk.Label(main_frame, 
-                      text=header,
-                      font=('Helvetica', 14, 'bold'),
-                      background='#f0f0f0')
-    label.grid(row=0, column=i, padx=15, pady=(0, 20))
+# Title
+title_label = ttk.Label(root,
+                       text="Add Stock",
+                       style='Header.TLabel')
+title_label.pack(pady=50)
 
-# Function to add a new row for entering stock
-def add_new_row():
-    row = len(main_frame.grid_slaves()) // 5
-    selected_medication = tk.StringVar(value=medications[0])
-    
-    medication_menu = ttk.OptionMenu(main_frame, selected_medication, medications[0], *medications)
-    medication_menu.grid(row=row, column=0, padx=15, pady=5)
-    
-    for i in range(1, 4):
-        entry = ttk.Entry(main_frame, font=('Helvetica', 12))
-        entry.grid(row=row, column=i, padx=15, pady=5)
+# Form frame
+form_frame = ttk.Frame(main_frame)
+form_frame.pack(padx=20, pady=20)
 
-# Function to save stock to CSV
-def save_stock():
-    rows = []
-    for i in range(1, len(main_frame.grid_slaves()) // 5):
-        item_name = main_frame.grid_slaves(row=i, column=0)[0].get()
-        inner_qty = main_frame.grid_slaves(row=i, column=1)[0].get()
-        loose_qty = main_frame.grid_slaves(row=i, column=2)[0].get()
-        outer_qty = main_frame.grid_slaves(row=i, column=3)[0].get()
-        rows.append([item_name, inner_qty, loose_qty, outer_qty])
+# Item Name
+ttk.Label(form_frame, text="Item Name:").grid(row=0, column=0, padx=10, pady=10, sticky='e')
+combo_medication = ttk.Combobox(form_frame, values=medications, state='readonly', width=30)
+combo_medication.set(medications[0])
+combo_medication.grid(row=0, column=1, padx=10, pady=10)
 
-    filename = f"stock_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
-    with open(filename, mode='w', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow(["Item Name", "Inner Quantity", "Loose Quantity", "Outer Quantity"])
-        writer.writerows(rows)
+# Inner Quantity
+ttk.Label(form_frame, text="Inner Quantity:").grid(row=1, column=0, padx=10, pady=10, sticky='e')
+entry_inner_qty = ttk.Entry(form_frame, width=32)
+entry_inner_qty.grid(row=1, column=1, padx=10, pady=10)
 
-    # Clear the entry fields after saving the stock
-    for widget in main_frame.winfo_children():
-        widget.destroy()
-    add_new_row()
+# Loose Quantity
+ttk.Label(form_frame, text="Loose Quantity:").grid(row=2, column=0, padx=10, pady=10, sticky='e')
+entry_loose_qty = ttk.Entry(form_frame, width=32)
+entry_loose_qty.grid(row=2, column=1, padx=10, pady=10)
 
-# Button frame
+# Outer Quantity
+ttk.Label(form_frame, text="Outer Quantity:").grid(row=3, column=0, padx=10, pady=10, sticky='e')
+entry_outer_qty = ttk.Entry(form_frame, width=32)
+entry_outer_qty.grid(row=3, column=1, padx=10, pady=10)
+
+# Buttons frame
 button_frame = ttk.Frame(main_frame)
-button_frame.grid(row=0, column=4, rowspan=3, padx=(30, 0), sticky='n')
+button_frame.pack(pady=20)
 
-# Add styled buttons
-add_btn = ttk.Button(button_frame, 
-                     text="Add Stock",
-                     command=add_stock,
-                     style='TButton')
-add_btn.pack(pady=5)
+add_button = ttk.Button(button_frame, text="Add Stock", command=add_stock)
+add_button.pack(pady=10)
 
-save_btn = ttk.Button(button_frame,
-                      text="Save Stock",
-                      command=save_stock,
-                      style='TButton')
-save_btn.pack(pady=5)
+back_button = ttk.Button(root, text="Back", command=mv_open)
+back_button.pack(anchor='nw', padx=20, pady=20)
 
-exit_btn = ttk.Button(button_frame,
-                      text="Exit",
-                      command=on_closing,
-                      style='TButton')
-exit_btn.pack(pady=5)
-
-# Add initial row
-add_new_row()
-
-root.protocol("WM_DELETE_WINDOW", on_closing)
 root.mainloop()
