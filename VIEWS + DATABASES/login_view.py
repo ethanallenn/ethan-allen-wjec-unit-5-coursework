@@ -22,7 +22,7 @@ def exit_program():
 def check_credentials():
     username = username_entry.get()
     password = password_entry.get()
-    conn = sqlite3.connect('users.db')q
+    conn = sqlite3.connect('users.db')
     c = conn.cursor()
     c.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password))
     result = c.fetchone()
@@ -106,8 +106,8 @@ login_button = tk.Button(login_frame, text="Login", bg="#4CAF50", fg="black",
 login_button.pack(pady=(20, 10), fill="x")
 
 # Exit button
-exit_button = tk.Button(login_frame, text="Exit", bg="#f44336", fg="black",
-                       activebackground="#da190b", **button_style,
+exit_button = tk.Button(login_frame, text="Exit", bg="#4CAF50", fg="black",
+                       activebackground="#45a049", **button_style,
                        command=exit_program)
 exit_button.pack(fill="x")
 
