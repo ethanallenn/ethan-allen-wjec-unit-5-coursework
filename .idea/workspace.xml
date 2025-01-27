@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="4823758b-e26e-4847-8f63-c44dec3a0a31" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/ethan-allen-wjec-unit-5-coursework.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ethan-allen-wjec-unit-5-coursework.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VIEWS + DATABASES/main_view.py" beforeDir="false" afterPath="$PROJECT_DIR$/VIEWS + DATABASES/main_view.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VIEWS + DATABASES/users.db" beforeDir="false" afterPath="$PROJECT_DIR$/VIEWS + DATABASES/users.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,7 +28,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/ethanallenn/ethan-allen-wjec-unit-5-coursework.git&quot;,
-    &quot;accountId&quot;: &quot;4006d788-1e26-4a44-bfdd-3d1b2271206b&quot;
+    &quot;accountId&quot;: &quot;ea874230-f74d-413b-a406-84f53886351e&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
@@ -33,29 +36,32 @@
   &quot;associatedIndex&quot;: 1
 }</component>
   <component name="ProjectId" id="2rw9cdsIPGnDPdrjFg0Ls1FGxDm" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.login_view.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.login_view.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main_view.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/ethan/OneDrive - C2k/1. Year 14_24_25/Computer Science/A2 - Coursework/SoftwareDevelopment/ethan-allen-wjec-unit-5-coursework&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-PY-243.22562.220" />
-        <option value="bundled-python-sdk-0fc6c617c4bd-9a18a617cbe4-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.22562.220" />
+        <option value="bundled-js-predefined-d6986cc7102b-410509235cf1-JavaScript-PY-242.20224.347" />
+        <option value="bundled-python-sdk-c2d6afa66fbe-39cff9de6eef-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.20224.347" />
       </set>
     </attachedChunks>
   </component>
@@ -70,13 +76,27 @@
       <workItem from="1737459351858" duration="15000" />
       <workItem from="1737624884051" duration="135000" />
       <workItem from="1737629563499" duration="900000" />
+      <workItem from="1738007195441" duration="1683000" />
+      <workItem from="1738008910392" duration="12000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/login_view_py$login_view.coverage" NAME="login_view Coverage Results" MODIFIED="1737629600961" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/VIEWS + DATABASES" />
+    <SUITE FILE_PATH="coverage/login_view_py$main_view.coverage" NAME="main_view Coverage Results" MODIFIED="1738008824224" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/VIEWS + DATABASES" />
   </component>
 </project>

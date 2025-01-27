@@ -1,74 +1,85 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import messagebox
+
 
 def logout():
+    """Function to handle logout."""
+    confirm = messagebox.askyesno("Confirm Logout", "Are you sure you want to logout?")
+    if confirm:
+        root.destroy()  # Close current window
+        import login_view  # Redirect to login_view
+
+
+def user_management():
+    """Navigate to User Management."""
     root.destroy()
-    import login_view
+    import user_menu_view  # Redirect to user_menu_view
 
-def open_user_menu():
-    import user_menu_view
-    user_menu_view
 
-def open_stock_menu():
-    import stock_menu_view
-    stock_menu_view
+def staff_management():
+    """Function handling Staff Management."""
+    root.destroy()
+    import staff_menu_view  # Redirect to staff_menu_view
 
-# Create the main window
+
+def stock_management():
+    """Function handling Stock Management."""
+    root.destroy()
+    import stock_menu_view  # Redirect to stock_menu_view
+
+
+def prescription_management():
+    """Function handling Prescription Management."""
+    root.destroy()
+    import prescription_menu_view  # Redirect to prescription_menu_view
+
+
+def administrative_tools():
+    """Function handling Administrative Tools."""
+    root.destroy()
+    import admin_tools_view  # Redirect to admin_tools_view
+
+
+# Create main Tkinter window
 root = tk.Tk()
-root.title("Calle Pharmacy Management System")
-root.geometry("1400x720")
-root.config(bg="#f0f0f0")
+root.title("Calle Pharmacy - Home Screen")
+root.configure(bg="#ffffff")
+root.geometry("400x500")  # Updated size to match user_menu_view
 root.resizable(False, False)
 
-# Create styles
-style = ttk.Style()
-style.theme_use('clam')
-style.configure('Menu.TButton',
-                padding=20,
-                font=('Helvetica', 16),
-                background='#4a90e2',
-                foreground='white',
-                width=25)
-style.configure('Logout.TButton',
-                padding=10,
-                font=('Helvetica', 12),
-                background='#f44336',
-                foreground='white')
+# Create Frames for layout organization
+frame = tk.Frame(root, bg="#e0f7fa", bd=2, relief="flat", padx=20, pady=20)
+frame.pack(pady=10)
 
-# Create main frame
-main_frame = ttk.Frame(root)
-main_frame.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+# Heading
+heading = tk.Label(frame, text="Calle Pharmacy Management System", font=("Helvetica", 16, "bold"), bg="#e0f7fa",
+                   fg="#00695c")
+heading.pack(pady=15)
 
-# Title
-title_label = ttk.Label(root,
-                       text="Main Menu",
-                       font=('Helvetica', 32, 'bold'),
-                       background='#f0f0f0')
-title_label.pack(pady=50)
+# Buttons
+button_style = {"font": ("Helvetica", 12), "bg": "#00695c", "fg": "#ffffff", "activebackground": "#004d40",
+                "activeforeground": "#ffffff", "width": 25, "relief": "flat", "bd": 0}
 
-# Menu buttons frame
-button_frame = ttk.Frame(main_frame)
-button_frame.pack(pady=20)
+btn_user_management = tk.Button(frame, text="User Management", command=user_management, **button_style)
+btn_user_management.pack(pady=8)
 
-# User Menu Button
-user_menu_btn = ttk.Button(button_frame,
-                          text="User Management",
-                          style='Menu.TButton',
-                          command=open_user_menu)
-user_menu_btn.pack(side=tk.LEFT, padx=20, pady=10)
+btn_staff_management = tk.Button(frame, text="Staff Management", command=staff_management, **button_style)
+btn_staff_management.pack(pady=8)
 
-# Stock Menu Button
-stock_menu_btn = ttk.Button(button_frame,
-                           text="Stock Management",
-                           style='Menu.TButton',
-                           command=open_stock_menu)
-stock_menu_btn.pack(side=tk.LEFT, padx=20, pady=10)
+btn_stock_management = tk.Button(frame, text="Stock Management", command=stock_management, **button_style)
+btn_stock_management.pack(pady=8)
+
+btn_prescription_management = tk.Button(frame, text="Prescription Management", command=prescription_management,
+                                        **button_style)
+btn_prescription_management.pack(pady=8)
+
+btn_administrative_tools = tk.Button(frame, text="Administrative Tools", command=administrative_tools, **button_style)
+btn_administrative_tools.pack(pady=8)
 
 # Logout Button
-logout_btn = ttk.Button(root,
-                       text="Logout",
-                       style='Logout.TButton',
-                       command=logout)
-logout_btn.place(relx=0.95, rely=0.05, anchor='ne')
+btn_logout = tk.Button(frame, text="Logout", command=logout, font=("Helvetica", 12), bg="#d32f2f", fg="#ffffff",
+                       activebackground="#b71c1c", activeforeground="#ffffff", width=25, relief="flat", bd=0)
+btn_logout.pack(pady=8)
 
+# Run the application
 root.mainloop()
