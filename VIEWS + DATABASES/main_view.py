@@ -1,6 +1,10 @@
 import tkinter as tk
 from tkinter import ttk
 
+def clear_frame(frame):
+    for widget in frame.winfo_children():
+        widget.destroy()
+
 def logout():
     root.destroy()
     import login_view
@@ -15,7 +19,7 @@ def open_stock_menu():
 
 # Create the main window
 root = tk.Tk()
-root.title("Calle Pharmacy Management System")
+root.title29("Calle Pharmacy Management System")
 root.geometry("1400x720")
 root.config(bg="#f0f0f0")
 root.resizable(False, False)

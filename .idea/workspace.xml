@@ -5,13 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4823758b-e26e-4847-8f63-c44dec3a0a31" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/ethan-allen-wjec-unit-5-coursework.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ethan-allen-wjec-unit-5-coursework.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VIEWS + DATABASES/main_view.py" beforeDir="false" afterPath="$PROJECT_DIR$/VIEWS + DATABASES/main_view.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VIEWS + DATABASES/style.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stock_database.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/users.db" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -33,6 +45,9 @@
   &quot;associatedIndex&quot;: 1
 }</component>
   <component name="ProjectId" id="2rw9cdsIPGnDPdrjFg0Ls1FGxDm" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -40,9 +55,11 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Python.login_view.executor": "Run",
+    "Python.main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/ethanallen/Library/CloudStorage/OneDrive-C2k/1. Year 14_24_25/Computer Science/A2 - Coursework/SoftwareDevelopment/ethan-allen-wjec-unit-5-coursework",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -51,6 +68,15 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/VIEWS + DATABASES" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -70,6 +96,7 @@
       <workItem from="1737459351858" duration="15000" />
       <workItem from="1737624884051" duration="135000" />
       <workItem from="1737629563499" duration="900000" />
+      <workItem from="1738063410660" duration="1344000" />
     </task>
     <servers />
   </component>
@@ -77,6 +104,7 @@
     <option name="version" value="3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/main_view_py$main.coverage" NAME="main Coverage Results" MODIFIED="1738063933340" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/login_view_py$login_view.coverage" NAME="login_view Coverage Results" MODIFIED="1737629600961" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/VIEWS + DATABASES" />
   </component>
 </project>
