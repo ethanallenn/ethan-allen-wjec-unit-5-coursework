@@ -19,7 +19,7 @@ def open_stock_menu():
 
 # Create the main window
 root = tk.Tk()
-root.title29("Calle Pharmacy Management System")
+root.title("Calle Pharmacy Management System")
 root.geometry("1400x720")
 root.config(bg="#f0f0f0")
 root.resizable(False, False)

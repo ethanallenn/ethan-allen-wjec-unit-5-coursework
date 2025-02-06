@@ -15,7 +15,7 @@ def delete_system_user():
 
 def edit_system_user():
     root.destroy()
-    import edit_system_user
+
 
 # Create the main window
 root = tk.Tk()

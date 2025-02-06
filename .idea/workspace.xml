@@ -4,14 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4823758b-e26e-4847-8f63-c44dec3a0a31" name="Changes" comment="">
+    <list default="true" id="4823758b-e26e-4847-8f63-c44dec3a0a31" name="Changes" comment="29.1.25">
       <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/VIEWS + DATABASES/main_view.py" beforeDir="false" afterPath="$PROJECT_DIR$/VIEWS + DATABASES/main_view.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VIEWS + DATABASES/style.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_database.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/users.db" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +52,8 @@
   "keyToString": {
     "Python.login_view.executor": "Run",
     "Python.main.executor": "Run",
+    "Python.main_view.executor": "Run",
+    "Python.user_menu_view.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
@@ -97,14 +95,36 @@
       <workItem from="1737624884051" duration="135000" />
       <workItem from="1737629563499" duration="900000" />
       <workItem from="1738063410660" duration="1344000" />
+      <workItem from="1738161855028" duration="86000" />
+      <workItem from="1738331867184" duration="89000" />
+      <workItem from="1738783187486" duration="19000" />
+      <workItem from="1738842984645" duration="1780000" />
+      <workItem from="1738845196411" duration="135000" />
+      <workItem from="1738854851604" duration="713000" />
+      <workItem from="1738870900653" duration="1104000" />
     </task>
+    <task id="LOCAL-00001" summary="29.1.25">
+      <option name="closed" value="true" />
+      <created>1738161912400</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1738161912400</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="29.1.25" />
+    <option name="LAST_COMMIT_MESSAGE" value="29.1.25" />
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/main_view_py$main.coverage" NAME="main Coverage Results" MODIFIED="1738063933340" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/login_view_py$login_view.coverage" NAME="login_view Coverage Results" MODIFIED="1737629600961" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/VIEWS + DATABASES" />
+    <SUITE FILE_PATH="coverage/login_view_py$user_menu_view.coverage" NAME="user_menu_view Coverage Results" MODIFIED="1738871020155" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/VIEWS + DATABASES" />
+    <SUITE FILE_PATH="coverage/login_view_py$login_view.coverage" NAME="login_view Coverage Results" MODIFIED="1738854962581" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/VIEWS + DATABASES" />
+    <SUITE FILE_PATH="coverage/login_view_py$main_view.coverage" NAME="main_view Coverage Results" MODIFIED="1738844446521" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/VIEWS + DATABASES" />
   </component>
 </project>
