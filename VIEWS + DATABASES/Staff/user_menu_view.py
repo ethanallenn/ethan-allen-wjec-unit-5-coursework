@@ -99,20 +99,16 @@ style.configure('Buttons.TFrame', background='#f0f0f0')
 # Add hover effects
 def on_enter(e):
     if e.widget['style'] == 'Menu.TButton':
-        e.widget.configure(style='Menu.TButton.Hover')
-    elif e.widget['style'] == 'Back.TButton':
-        e.widget.configure(style='Back.TButton.Hover')
-
-def on_leave(e):
-    if e.widget['style'] == 'Menu.TButton.Hover':
         e.widget.configure(style='Menu.TButton')
-    elif e.widget['style'] == 'Back.TButton.Hover':
+    elif e.widget['style'] == 'Back.TButton':
         e.widget.configure(style='Back.TButton')
 
-style.configure('Menu.TButton.Hover',
-                background='#357abd')  # Darker blue on hover
-style.configure('Back.TButton.Hover',
-                background='#d32f2f')  # Darker red on hover
+def on_leave(e):
+    if e.widget['style'] == 'Menu.TButton':
+        e.widget.configure(style='Menu.TButton')
+    elif e.widget['style'] == 'Back.TButton':
+        e.widget.configure(style='Back.TButton')
+
 
 # Bind hover effects for interactive feedback
 for button in [add_user_button, edit_user_button, delete_user_button, back_button]:
