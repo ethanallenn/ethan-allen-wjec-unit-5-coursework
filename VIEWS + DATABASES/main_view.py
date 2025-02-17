@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from tkinter import messagebox
 
 def clear_frame(frame):
     for widget in frame.winfo_children():
@@ -10,12 +11,12 @@ def logout():
     import login_view
 
 def open_user_menu():
-    import user_menu_view
-    user_menu_view
+    import Staff.user_menu_view
+    root.destroy()
+    Staff.user_menu_view
 
-def open_stock_menu():
-    import stock_menu_view
-    stock_menu_view
+
+
 
 # Create the main window
 root = tk.Tk()
@@ -64,8 +65,11 @@ user_menu_btn.pack(side=tk.LEFT, padx=20, pady=10)
 # Stock Menu Button
 stock_menu_btn = ttk.Button(button_frame,
                            text="Stock Management",
-                           style='Menu.TButton',
-                           command=open_stock_menu)
+                           style='Menu.TButton',)
+def show_feature_not_available():
+    messagebox.showinfo("Feature Not Available", "This feature is not available yet.")
+
+stock_menu_btn.config(command=show_feature_not_available)
 stock_menu_btn.pack(side=tk.LEFT, padx=20, pady=10)
 
 # Logout Button
