@@ -5,7 +5,7 @@ import os
 
 # Create the main window
 root = tk.Tk()
-root.title("Calle Pharmacy - Staff Management")
+root.title("Calle Pharmacy - Stock Management")
 root.geometry("1280x720")
 root.config(bg="#f0f0f0")
 root.resizable(True, True)
@@ -41,7 +41,7 @@ shadow_frame.place(in_=menu_frame, x=5, y=5, relwidth=1, relheight=1)
 menu_frame.lift()
 
 # Staff Management header
-header_label = tk.Label(menu_frame, text="Staff Management", font=("Helvetica", 24, "bold"), bg="white", fg="#333333")
+header_label = tk.Label(menu_frame, text="Stock Management", font=("Helvetica", 24, "bold"), bg="white", fg="#333333")
 header_label.pack(pady=(0, 20))
 
 # Button style
@@ -54,12 +54,12 @@ button_style = {
     "width": 20
 }
 
-def add_staff():
-    import add_system_user
+def add_stock():
+    messagebox.showinfo("Feature not available", "This feature is not available yet.")
     pass
 
-def search_staff():
-    import search_system_user
+def search_stock():
+    messagebox.showinfo("Feature not available", "This feature is not available yet.")
     pass
 
 def back_to_main():
@@ -67,15 +67,15 @@ def back_to_main():
     import main_view
 
 # Add Staff button
-add_button = tk.Button(menu_frame, text="Add Staff Member", bg="#2ecc71", fg="white",
+add_button = tk.Button(menu_frame, text="Add Stock", bg="#2ecc71", fg="white",
                       activebackground="#27ae60", activeforeground="white",
-                      command=add_staff, **button_style)
+                      command=add_stock, **button_style)
 add_button.pack(pady=(20, 10), fill="x")
 
 # Search Staff button
-search_button = tk.Button(menu_frame, text="Manage Staff Member", bg="#3498db", fg="white",
+search_button = tk.Button(menu_frame, text="Manage Stock", bg="#3498db", fg="white",
                          activebackground="#2980b9", activeforeground="white",
-                         command=search_staff, **button_style)
+                         command=search_stock, **button_style)
 search_button.pack(pady=10, fill="x")
 
 # Back to Main Menu button

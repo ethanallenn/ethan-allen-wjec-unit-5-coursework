@@ -3,6 +3,7 @@ from tkinter import messagebox
 import sqlite3
 from tkinter import ttk
 import os
+import tkmacosx
 
 def create_database():
     conn = sqlite3.connect('users.db')
